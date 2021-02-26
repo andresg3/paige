@@ -21,3 +21,4 @@ Steps:
 7. Add a column based on the average of all three glucose measurement time points that indicates whether it’s normal, prediabetes or diabetes.
 
 8. Store data in a database or file format of choice.
+
