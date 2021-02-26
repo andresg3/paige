@@ -1,5 +1,3 @@
-Author: Giovanny A Granda
-
 Scenario: We received data from a collaborating hospital.  Build an ETL pipeline from the patient_data.csv file.
 
 Background: A blood sugar level less than 140 mg/dL (7.8 mmol/L) is normal. A reading of more than 200 mg/dL (11.1 mmol/L) after two hours indicates diabetes. A reading between 140 and 199 mg/dL (7.8 mmol/L and 11.0 mmol/L) indicates prediabetes
@@ -24,3 +22,7 @@ Steps:
 
 8. Store data in a database or file format of choice.
 
+--
+
+Author: Giovanny A Granda || 
+https://github.com/andresg3/simple_etl_paige
