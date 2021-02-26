@@ -47,7 +47,7 @@ def prepare_dataframe(df):
 
 
 def main():
-    csv_file = "2020-10-28_patient_data.csv"
+    csv_file = "data/2020-10-28_patient_data.csv"
 
     # Connect to the database and create ddl
     db = DatabaseDriver()
