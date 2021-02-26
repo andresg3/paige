@@ -3,11 +3,20 @@ import numpy as np
 from databasedriver import DatabaseDriver
 
 
-def extract(source_file):
-    return pd.read_csv(source_file, usecols=[0, 5, 6, 7, 8, 9])
+def read_dataframe(source_file):
+    """
+    Read csv file and load it into dataframe
+    """
+    df = pd.read_csv(source_file, usecols=[0, 5, 6, 7, 8, 9])
+    return df
 
 
-def cleanup(df):
+def clean_dataframe(df):
+    """
+    Drop nan, inf and duplicates values from dataframe.
+    Any Reading of less than 10 and more than 1000 is considered
+    anomaly and it is also dropped
+    """
     glucose_cols = ['glucose_mg/dl_t1', 'glucose_mg/dl_t2', 'glucose_mg/dl_t3']
     df = df.replace([np.inf, -np.inf], np.nan)
     df = df.dropna(subset=glucose_cols, how="any")
@@ -18,7 +27,10 @@ def cleanup(df):
     return df
 
 
-def xform(df):
+def prepare_dataframe(df):
+    """
+    Prepare the dataframe for insertion into the database
+    """
     df['readings_avg'] = df[['glucose_mg/dl_t1', 'glucose_mg/dl_t2', 'glucose_mg/dl_t3']].mean(axis=1)
 
     levels = []
@@ -35,16 +47,21 @@ def xform(df):
 
 
 def main():
-    source_file = "2020-10-28_patient_data.csv"
+    csv_file = "2020-10-28_patient_data.csv"
 
+    # Connect to the database and create ddl
     db = DatabaseDriver()
     db.setup()
 
-    df = extract(source_file)
-    clean_df = cleanup(df)
-    final_df = xform(clean_df)
+    # Read dataframe
+    df = read_dataframe(csv_file)
+    # Clean Dataframe
+    clean_df = clean_dataframe(df)
+    # Prepare dataframe
+    final_df = prepare_dataframe(clean_df)
 
-    db.load_df(final_df)
+    # Load prepared dataframe into database
+    db.load_dataframe(final_df)
 
 
 if __name__ == '__main__':
