@@ -6,9 +6,11 @@ create_blood_work_table = """
 	reading_1 float,
 	reading_2 float,
 	reading_3 float,
-	cancer_present boolean,
+	cancer_present varchar,
 	atrophy_present int,
 	readings_avg float, 
 	levels varchar
 );
 """
+
+insert_blood_work_table = """INSERT INTO lab.blood_work VALUES """
